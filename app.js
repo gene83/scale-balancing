@@ -1,23 +1,19 @@
 'use strict';
 
 function scaleBalancing(strArr) {
-  let leftAndRight = strArr[0].slice(1, strArr[0].length - 1);
-  let balancingWeights = strArr[1].slice(1, strArr[1].length - 1);
-
-  leftAndRight = leftAndRight.split(', ');
-  balancingWeights = balancingWeights.split(', ');
-
-  for (let i = 0; i < leftAndRight.length; i++) {
-    leftAndRight[i] = parseInt(leftAndRight[i]);
-  }
-
-  for (let i = 0; i < balancingWeights.length; i++) {
-    balancingWeights[i] = parseInt(balancingWeights[i]);
-  }
+  const leftAndRight = JSON.parse(strArr[0]);
+  const weights = JSON.parse(strArr[1]);
 
   const left = leftAndRight[0];
   const right = leftAndRight[1];
-  const weights = balancingWeights;
+
+  for (let i = 0; i < weights.length; i++) {
+    if (left + weights[i] === right) {
+      return weights[i].toString();
+    } else if (left === right + weights[i]) {
+      return weights[i].toString();
+    }
+  }
 
   for (let i = 0; i < weights.length; i++) {
     for (let j = 0; j < weights.length; j++) {
@@ -33,3 +29,7 @@ function scaleBalancing(strArr) {
 
   return 'not possible';
 }
+
+const testArray = ['[5, 9]', '[1, 2, 6, 7, 4]'];
+
+console.log(scaleBalancing(testArray));
